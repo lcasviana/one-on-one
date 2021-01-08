@@ -1,4 +1,4 @@
-package com.dti.one_on_one
+package com.dti.oneonone
 
 import io.flutter.embedding.android.FlutterActivity
 
