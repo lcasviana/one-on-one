@@ -18,6 +18,9 @@ class MyApp extends StatelessWidget {
         '/loading': (context) => LandingPage(),
         '/login': (context) => LoginPage(),
       },
+      theme: ThemeData(brightness: Brightness.light),
+      darkTheme: ThemeData(brightness: Brightness.dark),
+      themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
     );
   }
