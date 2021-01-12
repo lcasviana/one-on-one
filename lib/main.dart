@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:oneonone/pages/home.page.dart';
-import 'package:oneonone/pages/landing.page.dart';
-import 'package:oneonone/pages/login.page.dart';
+import 'package:oneonones/pages/home.page.dart';
+import 'package:oneonones/pages/landing.page.dart';
+import 'package:oneonones/pages/login.page.dart';
 
 void main() {
   runApp(MyApp());

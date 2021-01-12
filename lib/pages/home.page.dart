@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oneonone/features/dashboard/dashboard.feature.dart';
-import 'package:oneonone/features/historical/historical.feature.dart';
+import 'package:oneonones/features/dashboard/dashboard.feature.dart';
+import 'package:oneonones/features/historical/historical.feature.dart';
 
 class HomePage extends StatefulWidget {
   @override
