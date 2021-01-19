@@ -8,6 +8,6 @@ class HistoricalFeature extends StatefulWidget {
 class _HistoricalFeatureState extends State<HistoricalFeature> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return SingleChildScrollView();
   }
 }

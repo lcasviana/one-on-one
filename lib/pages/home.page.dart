@@ -27,11 +27,7 @@ class _HomePageState extends State<HomePage> {
           const BottomNavigationBarItem(icon: const Icon(Icons.home), label: 'Início'),
           const BottomNavigationBarItem(icon: const Icon(Icons.history), label: 'Histórico'),
         ],
-        onTap: (index) {
-          setState(() {
-            _navigationIndex = index;
-          });
-        },
+        onTap: (index) => setState(() => _navigationIndex = index),
       ),
     );
   }

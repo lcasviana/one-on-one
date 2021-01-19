@@ -12,16 +12,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'One-on-one\'s',
-      initialRoute: '/',
+      initialRoute: '/landing',
       routes: {
         '/': (context) => HomePage(),
-        '/loading': (context) => LandingPage(),
+        '/landing': (context) => LandingPage(),
         '/login': (context) => LoginPage(),
       },
       theme: ThemeData(brightness: Brightness.light),
       darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: ThemeMode.system,
-      debugShowCheckedModeBanner: false,
     );
   }
 }
