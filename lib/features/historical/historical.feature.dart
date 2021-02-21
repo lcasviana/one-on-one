@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:oneonones/repositories/historical.repository.dart';
+import 'package:oneonones/repositories/models/historical.model.dart';
+import 'package:oneonones/services/authentication/authentication.service.dart';
 
 class HistoricalFeature extends StatefulWidget {
   @override
@@ -6,8 +9,68 @@ class HistoricalFeature extends StatefulWidget {
 }
 
 class _HistoricalFeatureState extends State<HistoricalFeature> {
+  final _historicalRepository = HistoricalRepository();
+  List<Widget> _historicals = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _historicalRepository.obtain(AuthenticationService.email).then((h) {
+      setState(() {
+        _historicals = _renderList(h);
+      });
+    }).catchError((error) {
+      setState(() {
+        _historicals = [];
+      });
+    });
+  }
+
+  List<Widget> _renderList(List<HistoricalModel> historicals) {
+    return historicals
+        .map(
+          (o) => Card(
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.person),
+                      Text(o.leader.name),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.person),
+                      Text(o.led.name),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.calendar_today),
+                      Text(o.occurrence.toString()),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.edit),
+                      Text(o.commentary),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView();
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16),
+      child: Column(children: _historicals),
+    );
   }
 }

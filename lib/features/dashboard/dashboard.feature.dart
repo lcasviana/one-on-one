@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:oneonones/repositories/models/oneonone.model.dart';
+import 'package:oneonones/repositories/oneonone.repository.dart';
+import 'package:oneonones/services/authentication/authentication.service.dart';
 
 class DashboardFeature extends StatefulWidget {
   @override
@@ -6,36 +9,62 @@ class DashboardFeature extends StatefulWidget {
 }
 
 class _DashboardFeatureState extends State<DashboardFeature> {
+  final _oneononeRepository = OneononeRepository();
+  List<Widget> _oneonones = [];
+
   @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
-      child: Column(
-        children: [
-          Card(
+  void initState() {
+    super.initState();
+    _oneononeRepository.obtain(AuthenticationService.email).then((o) {
+      setState(() {
+        _oneonones = _renderList(o);
+      });
+    }).catchError((error) {
+      setState(() {
+        _oneonones = [];
+      });
+    });
+  }
+
+  List<Widget> _renderList(List<OneononeModel> oneonones) {
+    return oneonones
+        .map(
+          (o) => Card(
             child: Container(
               padding: EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Text('PRÓXIMO ENCONTRO'),
-                  Text('13 dez 2020'),
                   Row(
                     children: [
                       Icon(Icons.person),
-                      Text('Fulano Silva'),
+                      Text(o.leader.name),
                     ],
                   ),
-                  Text('Faltam 3 dias'),
-                  IconButton(
-                    icon: Icon(Icons.calendar_today),
-                    onPressed: () {},
+                  Row(
+                    children: [
+                      Icon(Icons.person),
+                      Text(o.led.name),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.calendar_today),
+                      Text(o.frequency.toString()),
+                    ],
                   ),
                 ],
               ),
             ),
-          )
-        ],
-      ),
+          ),
+        )
+        .toList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16),
+      child: Column(children: _oneonones),
     );
   }
 }
