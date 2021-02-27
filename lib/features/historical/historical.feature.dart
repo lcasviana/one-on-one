@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oneonones/repositories/historical.repository.dart';
-import 'package:oneonones/repositories/models/historical.model.dart';
-import 'package:oneonones/services/authentication/authentication.service.dart';
+import 'package:oneonones/common/models/oneonone_historical.model.dart';
+import 'package:oneonones/services/authentication.service.dart';
 
 class HistoricalFeature extends StatefulWidget {
   @override
@@ -26,7 +26,7 @@ class _HistoricalFeatureState extends State<HistoricalFeature> {
     });
   }
 
-  List<Widget> _renderList(List<HistoricalModel> historicals) {
+  List<Widget> _renderList(List<OneononeHistoricalModel> historicals) {
     return historicals
         .map(
           (o) => Card(
@@ -48,13 +48,13 @@ class _HistoricalFeatureState extends State<HistoricalFeature> {
                   ),
                   Row(
                     children: [
-                      Icon(Icons.calendar_today),
+                      Icon(Icons.today),
                       Text(o.occurrence.toString()),
                     ],
                   ),
                   Row(
                     children: [
-                      Icon(Icons.edit),
+                      Icon(Icons.feedback),
                       Text(o.commentary),
                     ],
                   ),

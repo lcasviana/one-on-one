@@ -1,6 +1,6 @@
 import 'package:oneonones/repositories/employee.repository.dart';
-import 'package:oneonones/repositories/models/employee.model.dart';
-import 'package:oneonones/services/local_storage/local_storage.service.dart';
+import 'package:oneonones/common/models/employee.model.dart';
+import 'package:oneonones/services/local_storage.service.dart';
 
 abstract class AuthenticationService {
   static final _localStorageKey = 'Authentication.Email';

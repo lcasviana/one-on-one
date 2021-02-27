@@ -1,4 +1,4 @@
-import 'package:oneonones/repositories/models/employee.model.dart';
+import 'package:oneonones/common/models/employee.model.dart';
 
 class OneononeModel {
   EmployeeModel leader;

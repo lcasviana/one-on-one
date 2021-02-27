@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:oneonones/repositories/models/oneonone.model.dart';
+import 'package:oneonones/common/models/oneonone.model.dart';
 import 'package:oneonones/repositories/oneonone.repository.dart';
-import 'package:oneonones/services/authentication/authentication.service.dart';
+import 'package:oneonones/services/authentication.service.dart';
 
 class DashboardFeature extends StatefulWidget {
   @override
@@ -48,7 +48,7 @@ class _DashboardFeatureState extends State<DashboardFeature> {
                   ),
                   Row(
                     children: [
-                      Icon(Icons.calendar_today),
+                      Icon(Icons.today),
                       Text(o.frequency.toString()),
                     ],
                   ),

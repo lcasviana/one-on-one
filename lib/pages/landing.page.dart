@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oneonones/services/authentication/authentication.service.dart';
-import 'package:oneonones/services/navigation/navigation.service.dart';
+import 'package:oneonones/services/authentication.service.dart';
+import 'package:oneonones/common/utils/navigator.util.dart';
 
 class LandingPage extends StatefulWidget {
   @override
@@ -12,8 +12,8 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
     AuthenticationService.startup()
-        .then((value) => value ? NavigationService.navigate(context, '/') : NavigationService.navigate(context, '/login'))
-        .catchError((err) => NavigationService.navigate(context, '/login'));
+        .then((value) => value ? NavigatorUtil.navigate(context, '/') : NavigatorUtil.navigate(context, '/login'))
+        .catchError((err) => NavigatorUtil.navigate(context, '/login'));
   }
 
   @override

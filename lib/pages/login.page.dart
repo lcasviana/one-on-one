@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oneonones/services/authentication/authentication.service.dart';
-import 'package:oneonones/services/navigation/navigation.service.dart';
+import 'package:oneonones/services/authentication.service.dart';
+import 'package:oneonones/common/utils/navigator.util.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                               child: Padding(child: Text('Login'), padding: EdgeInsets.all(8)),
                               onPressed: () {
                                 AuthenticationService.login(_emailController.text)
-                                    .then((result) => result ? NavigationService.navigate(context, '/') : null)
+                                    .then((result) => result ? NavigatorUtil.navigate(context, '/') : null)
                                     .catchError((error) {
                                   final snackBar = SnackBar(content: Text(error.toString()));
                                   ScaffoldMessenger.of(context).showSnackBar(snackBar);

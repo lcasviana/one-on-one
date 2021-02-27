@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:oneonones/features/dashboard/dashboard.feature.dart';
 import 'package:oneonones/features/historical/historical.feature.dart';
-import 'package:oneonones/services/authentication/authentication.service.dart';
-import 'package:oneonones/services/navigation/navigation.service.dart';
+import 'package:oneonones/services/authentication.service.dart';
+import 'package:oneonones/common/utils/navigator.util.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('One-on-one\'s')),
+      appBar: AppBar(title: Text('One-on-one\'s')),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -39,7 +39,7 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: Text('Logout'),
               onTap: () {
-                AuthenticationService.logout().then((result) => result ? NavigationService.navigate(context, '/login') : null).catchError((error) {});
+                AuthenticationService.logout().then((result) => result ? NavigatorUtil.navigate(context, '/login') : null).catchError((error) {});
               },
             ),
           ],
@@ -49,9 +49,9 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _navigationIndex,
         type: BottomNavigationBarType.fixed,
-        items: const [
-          const BottomNavigationBarItem(icon: const Icon(Icons.home), label: 'Dashboard'),
-          const BottomNavigationBarItem(icon: const Icon(Icons.history), label: 'Historical'),
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Dashboard'),
+          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'Historical'),
         ],
         onTap: (index) => setState(() => _navigationIndex = index),
       ),

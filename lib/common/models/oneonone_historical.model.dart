@@ -1,19 +1,19 @@
-import 'package:oneonones/repositories/models/employee.model.dart';
+import 'package:oneonones/common/models/employee.model.dart';
 
-class HistoricalModel {
+class OneononeHistoricalModel {
   EmployeeModel leader;
   EmployeeModel led;
   DateTime occurrence;
   String commentary;
 
-  HistoricalModel({
+  OneononeHistoricalModel({
     this.leader,
     this.led,
     this.occurrence,
     this.commentary,
   });
 
-  HistoricalModel.fromJson(Map<String, dynamic> json) {
+  OneononeHistoricalModel.fromJson(Map<String, dynamic> json) {
     leader = EmployeeModel.fromJson(json['leader']);
     led = EmployeeModel.fromJson(json['led']);
     occurrence = DateTime.parse(json['occurrence']);

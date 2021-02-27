@@ -1,29 +1,26 @@
 import 'package:dio/dio.dart';
-import 'package:oneonones/services/http_client/api_error.model.dart';
+import 'package:flutter/material.dart';
+import 'package:oneonones/common/models/error.model.dart';
 
-class HttpClientService {
+abstract class HttpClientBase {
   Dio _dio;
 
-  HttpClientService({
-    String baseUrl,
-  }) {
+  final _logInterceptor = LogInterceptor(
+    responseBody: true,
+    error: true,
+    requestHeader: false,
+    responseHeader: true,
+    request: false,
+    requestBody: false,
+  );
+
+  HttpClientBase(String baseUrl) {
     final options = BaseOptions(baseUrl: baseUrl);
     _dio = Dio(options);
-    _dio.interceptors.add(LogInterceptor(
-      responseBody: true,
-      error: true,
-      requestHeader: false,
-      responseHeader: false,
-      request: true,
-      requestBody: true,
-    ));
+    _dio.interceptors.add(_logInterceptor);
   }
 
-  void throwException(DioError error) {
-    final httpClientError = ApiErrorModel.fromJson(error.response.data);
-    throw Exception(httpClientError.errors.first);
-  }
-
+  @protected
   Future<dynamic> get({
     String path = '',
     Map<String, dynamic> queryParameters,
@@ -37,12 +34,14 @@ class HttpClientService {
       );
       return response.data;
     } on DioError catch (error) {
-      throwException(error);
+      final httpError = ErrorModel.fromJson(error.response.data);
+      return Future.error(httpError.errors);
     } catch (e) {
-      throw Exception(e.toString());
+      return Future.error(e);
     }
   }
 
+  @protected
   Future<dynamic> post({
     String path = '',
     FormData body,
@@ -58,12 +57,14 @@ class HttpClientService {
       );
       return response.data;
     } on DioError catch (error) {
-      throwException(error);
+      final httpError = ErrorModel.fromJson(error.response.data);
+      return Future.error(httpError.errors);
     } catch (e) {
-      throw Exception(e.toString());
+      return Future.error(e);
     }
   }
 
+  @protected
   Future<dynamic> put({
     String path = '',
     FormData body,
@@ -79,12 +80,14 @@ class HttpClientService {
       );
       return response.data;
     } on DioError catch (error) {
-      throwException(error);
+      final httpError = ErrorModel.fromJson(error.response.data);
+      return Future.error(httpError.errors);
     } catch (e) {
-      throw Exception(e.toString());
+      return Future.error(e);
     }
   }
 
+  @protected
   Future<dynamic> patch({
     String path = '',
     FormData body,
@@ -100,12 +103,14 @@ class HttpClientService {
       );
       return response.data;
     } on DioError catch (error) {
-      throwException(error);
+      final httpError = ErrorModel.fromJson(error.response.data);
+      return Future.error(httpError.errors);
     } catch (e) {
-      throw Exception(e.toString());
+      return Future.error(e);
     }
   }
 
+  @protected
   Future<dynamic> delete({
     String path = '',
     Map<String, dynamic> queryParameters,
@@ -119,9 +124,10 @@ class HttpClientService {
       );
       return response.data;
     } on DioError catch (error) {
-      throwException(error);
+      final httpError = ErrorModel.fromJson(error.response.data);
+      return Future.error(httpError.errors);
     } catch (e) {
-      throw Exception(e.toString());
+      return Future.error(e);
     }
   }
 }
