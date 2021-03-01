@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oneonones/common/models/oneonone.model.dart';
-import 'package:oneonones/repositories/oneonone.repository.dart';
+import 'package:oneonones/common/models/oneonone_compose.model.dart';
+import 'package:oneonones/repositories/dashboard.repository.dart';
 import 'package:oneonones/services/authentication.service.dart';
 
 class DashboardFeature extends StatefulWidget {
@@ -9,49 +9,37 @@ class DashboardFeature extends StatefulWidget {
 }
 
 class _DashboardFeatureState extends State<DashboardFeature> {
-  final _oneononeRepository = OneononeRepository();
-  List<Widget> _oneonones = [];
+  final _dashboardRepository = DashboardRepository();
+  List<OneononeComposeModel> _oneonones = [];
 
   @override
   void initState() {
     super.initState();
-    _oneononeRepository.obtain(AuthenticationService.email).then((o) {
+    _dashboardRepository.obtain(AuthenticationService.email).then((dashboard) {
       setState(() {
-        _oneonones = _renderList(o);
+        _oneonones = dashboard.oneonones;
       });
-    }).catchError((error) {
+    }).catchError((e, s) {
       setState(() {
         _oneonones = [];
       });
     });
   }
 
-  List<Widget> _renderList(List<OneononeModel> oneonones) {
-    return oneonones
+  List<Widget> _renderList() {
+    return _oneonones
         .map(
-          (o) => Card(
+          (compose) => Card(
             child: Container(
               padding: EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Icon(Icons.person),
-                      Text(o.leader.name),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.person),
-                      Text(o.led.name),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.today),
-                      Text(o.frequency.toString()),
-                    ],
-                  ),
+                  Row(children: [Icon(Icons.person), Text(compose.oneonone.leader.name)]),
+                  Row(children: [Icon(Icons.person), Text(compose.oneonone.led.name)]),
+                  Row(children: [Icon(Icons.history_rounded), Text(compose.oneonone.frequency.toString())]),
+                  Row(children: [Icon(Icons.today), Text(compose.status?.lastOccurrence?.toIso8601String()?.substring(0, 10))]),
+                  Row(children: [Icon(Icons.event_available), Text(compose.status?.nextOccurrence?.toIso8601String()?.substring(0, 10))]),
+                  Row(children: [Icon(Icons.check), Text(compose.status?.isLate?.toString())]),
                 ],
               ),
             ),
@@ -64,7 +52,7 @@ class _DashboardFeatureState extends State<DashboardFeature> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: EdgeInsets.all(16),
-      child: Column(children: _oneonones),
+      child: Column(children: _renderList()),
     );
   }
 }

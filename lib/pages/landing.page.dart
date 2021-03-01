@@ -12,8 +12,8 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
     AuthenticationService.startup()
-        .then((value) => value ? NavigatorUtil.navigate(context, '/') : NavigatorUtil.navigate(context, '/login'))
-        .catchError((err) => NavigatorUtil.navigate(context, '/login'));
+        .then((authenticated) => authenticated ? NavigatorUtil.navigate(context, '/') : NavigatorUtil.navigate(context, '/login'))
+        .catchError((_) => NavigatorUtil.navigate(context, '/login'));
   }
 
   @override
