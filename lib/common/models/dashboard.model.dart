@@ -11,6 +11,7 @@ class DashboardModel {
   });
 
   DashboardModel.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
     employee = EmployeeModel.fromJson(json['employee']);
     oneonones = List<OneononeComposeModel>.from(json['oneonones'].map((j) => OneononeComposeModel.fromJson(j)));
   }

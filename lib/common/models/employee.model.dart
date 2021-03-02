@@ -8,6 +8,7 @@ class EmployeeModel {
   });
 
   EmployeeModel.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
     name = json['name'];
     email = json['email'];
   }

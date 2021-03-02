@@ -12,6 +12,7 @@ class OneononeModel {
   });
 
   OneononeModel.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
     leader = EmployeeModel.fromJson(json['leader']);
     led = EmployeeModel.fromJson(json['led']);
     frequency = json['frequency'];

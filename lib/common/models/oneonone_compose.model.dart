@@ -14,6 +14,7 @@ class OneononeComposeModel {
   });
 
   OneononeComposeModel.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
     oneonone = OneononeModel.fromJson(json['oneonone']);
     historical = List<OneononeHistoricalModel>.from(json['historical'].map((j) => OneononeHistoricalModel.fromJson(j)));
     status = OneononeStatusModel.fromJson(json['status']);

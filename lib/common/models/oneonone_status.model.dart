@@ -10,8 +10,9 @@ class OneononeStatusModel {
   });
 
   OneononeStatusModel.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
     this.lastOccurrence = DateTime.parse(json['lastOccurrence']);
     this.nextOccurrence = DateTime.parse(json['nextOccurrence']);
-    this.isLate = json['isLate'];
+    this.isLate = json['isLate'] == 'true';
   }
 }

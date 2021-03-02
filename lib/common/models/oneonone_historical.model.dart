@@ -14,6 +14,7 @@ class OneononeHistoricalModel {
   });
 
   OneononeHistoricalModel.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
     leader = EmployeeModel.fromJson(json['leader']);
     led = EmployeeModel.fromJson(json['led']);
     occurrence = DateTime.parse(json['occurrence']);
