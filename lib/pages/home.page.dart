@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oneonones/features/dashboard/dashboard.feature.dart';
-import 'package:oneonones/features/historical/historical.feature.dart';
+import 'package:oneonones/features/dashboard.feature.dart';
+import 'package:oneonones/features/historical_all.feature.dart';
 import 'package:oneonones/services/authentication.service.dart';
 import 'package:oneonones/common/utils/navigator.util.dart';
 
@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
 
   static List<Widget> _content = [
     DashboardFeature(),
-    HistoricalFeature(),
+    HistoricalAllFeature(),
   ];
 
   @override

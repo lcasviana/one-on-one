@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:oneonones/repositories/historical.repository.dart';
 import 'package:oneonones/common/models/oneonone_historical.model.dart';
-import 'package:oneonones/services/authentication.service.dart';
+import 'package:oneonones/repositories/historical.repository.dart';
 
-class HistoricalFeature extends StatefulWidget {
+class HistoricalPairFeature extends StatefulWidget {
+  final String leaderEmail;
+  final String ledEmail;
+
+  HistoricalPairFeature({
+    this.leaderEmail,
+    this.ledEmail,
+  });
+
   @override
-  _HistoricalFeatureState createState() => _HistoricalFeatureState();
+  _HistoricalPairFeatureState createState() => _HistoricalPairFeatureState();
 }
 
-class _HistoricalFeatureState extends State<HistoricalFeature> {
+class _HistoricalPairFeatureState extends State<HistoricalPairFeature> {
   final _historicalRepository = HistoricalRepository();
   List<OneononeHistoricalModel> _historical = [];
 
   @override
   void initState() {
     super.initState();
-    _historicalRepository.obtain(AuthenticationService.email).then((historical) {
+    _historicalRepository.ObtainPair(widget.leaderEmail, widget.ledEmail).then((historical) {
       setState(() {
         _historical = historical;
       });

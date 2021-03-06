@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oneonones/common/models/oneonone_compose.model.dart';
+import 'package:oneonones/features/historical_pair.feature.dart';
 import 'package:oneonones/repositories/dashboard.repository.dart';
 import 'package:oneonones/services/authentication.service.dart';
 
@@ -26,6 +27,22 @@ class _DashboardFeatureState extends State<DashboardFeature> {
     });
   }
 
+  void _showHistoricalPair(String leaderEmail, String ledEmail) {
+    showGeneralDialog(
+      context: context,
+      pageBuilder: (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation) {
+        return Card(
+          child: Column(
+            children: [
+              HistoricalPairFeature(leaderEmail: leaderEmail, ledEmail: ledEmail),
+              IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.of(context).pop()),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   List<Widget> _renderList() {
     return _oneonones
         .map(
@@ -40,6 +57,13 @@ class _DashboardFeatureState extends State<DashboardFeature> {
                   Row(children: [Icon(Icons.today), Text(compose.status?.lastOccurrence?.toIso8601String()?.substring(0, 10) ?? '')]),
                   Row(children: [Icon(Icons.event_available), Text(compose.status?.nextOccurrence?.toIso8601String()?.substring(0, 10) ?? '')]),
                   Row(children: [Icon(Icons.check), Text(compose.status?.isLate?.toString() ?? '')]),
+                  Row(
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.history_rounded),
+                          onPressed: () => _showHistoricalPair(compose.oneonone.leader.email, compose.oneonone.led.email)),
+                    ],
+                  ),
                 ],
               ),
             ),
