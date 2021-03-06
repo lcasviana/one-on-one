@@ -22,7 +22,7 @@ class _HistoricalPairFeatureState extends State<HistoricalPairFeature> {
   @override
   void initState() {
     super.initState();
-    _historicalRepository.ObtainPair(widget.leaderEmail, widget.ledEmail).then((historical) {
+    _historicalRepository.obtainPair(widget.leaderEmail, widget.ledEmail).then((historical) {
       setState(() {
         _historical = historical;
       });

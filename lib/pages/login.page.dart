@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(height: 16),
                           ButtonTheme(
                             colorScheme: ColorScheme.dark(),
-                            child: RaisedButton(
+                            child: ElevatedButton(
                               child: Padding(child: Text('Login'), padding: EdgeInsets.all(8)),
                               onPressed: () {
                                 AuthenticationService.login(_emailController.text)
