@@ -1,9 +1,9 @@
 import 'package:oneonones/common/models/employee.model.dart';
 
 class OneononeModel {
-  EmployeeModel leader;
-  EmployeeModel led;
-  int frequency;
+  EmployeeModel? leader;
+  EmployeeModel? led;
+  int? frequency;
 
   OneononeModel({
     this.leader,
@@ -11,7 +11,7 @@ class OneononeModel {
     this.frequency,
   });
 
-  OneononeModel.fromJson(Map<String, dynamic> json) {
+  OneononeModel.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
     leader = EmployeeModel.fromJson(json['leader']);
     led = EmployeeModel.fromJson(json['led']);

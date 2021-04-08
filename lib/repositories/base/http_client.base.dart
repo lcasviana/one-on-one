@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:oneonones/common/models/error.model.dart';
 
 abstract class HttpClientBase {
-  Dio _dio;
+  late Dio _dio;
 
   final _logInterceptor = LogInterceptor(
     responseBody: true,
@@ -23,8 +23,8 @@ abstract class HttpClientBase {
   @protected
   Future<dynamic> get({
     String path = '',
-    Map<String, dynamic> queryParameters,
-    Options options,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
   }) async {
     try {
       final response = await _dio.get(
@@ -34,8 +34,8 @@ abstract class HttpClientBase {
       );
       return response.data;
     } on DioError catch (error) {
-      final httpError = ErrorModel.fromJson(error.response.data);
-      return Future.error(httpError.errors);
+      final httpError = ErrorModel.fromJson(error.response!.data);
+      return Future.error(httpError.errors!);
     } catch (e) {
       return Future.error(e);
     }
@@ -44,9 +44,9 @@ abstract class HttpClientBase {
   @protected
   Future<dynamic> post({
     String path = '',
-    FormData body,
-    Map<String, dynamic> queryParameters,
-    Options options,
+    FormData? body,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
   }) async {
     try {
       final response = await _dio.post(
@@ -57,8 +57,8 @@ abstract class HttpClientBase {
       );
       return response.data;
     } on DioError catch (error) {
-      final httpError = ErrorModel.fromJson(error.response.data);
-      return Future.error(httpError.errors);
+      final httpError = ErrorModel.fromJson(error.response!.data);
+      return Future.error(httpError.errors!);
     } catch (e) {
       return Future.error(e);
     }
@@ -67,9 +67,9 @@ abstract class HttpClientBase {
   @protected
   Future<dynamic> put({
     String path = '',
-    FormData body,
-    Map<String, dynamic> queryParameters,
-    Options options,
+    FormData? body,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
   }) async {
     try {
       final response = await _dio.put(
@@ -80,8 +80,8 @@ abstract class HttpClientBase {
       );
       return response.data;
     } on DioError catch (error) {
-      final httpError = ErrorModel.fromJson(error.response.data);
-      return Future.error(httpError.errors);
+      final httpError = ErrorModel.fromJson(error.response!.data);
+      return Future.error(httpError.errors!);
     } catch (e) {
       return Future.error(e);
     }
@@ -90,9 +90,9 @@ abstract class HttpClientBase {
   @protected
   Future<dynamic> patch({
     String path = '',
-    FormData body,
-    Map<String, dynamic> queryParameters,
-    Options options,
+    FormData? body,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
   }) async {
     try {
       final response = await _dio.patch(
@@ -103,8 +103,8 @@ abstract class HttpClientBase {
       );
       return response.data;
     } on DioError catch (error) {
-      final httpError = ErrorModel.fromJson(error.response.data);
-      return Future.error(httpError.errors);
+      final httpError = ErrorModel.fromJson(error.response!.data);
+      return Future.error(httpError.errors!);
     } catch (e) {
       return Future.error(e);
     }
@@ -113,8 +113,8 @@ abstract class HttpClientBase {
   @protected
   Future<dynamic> delete({
     String path = '',
-    Map<String, dynamic> queryParameters,
-    Options options,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
   }) async {
     try {
       final response = await _dio.delete(
@@ -124,8 +124,8 @@ abstract class HttpClientBase {
       );
       return response.data;
     } on DioError catch (error) {
-      final httpError = ErrorModel.fromJson(error.response.data);
-      return Future.error(httpError.errors);
+      final httpError = ErrorModel.fromJson(error.response!.data);
+      return Future.error(httpError.errors!);
     } catch (e) {
       return Future.error(e);
     }

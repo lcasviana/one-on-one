@@ -3,8 +3,8 @@ import 'package:oneonones/common/models/oneonone_historical.model.dart';
 import 'package:oneonones/repositories/historical.repository.dart';
 
 class HistoricalPairFeature extends StatefulWidget {
-  final String leaderEmail;
-  final String ledEmail;
+  final String? leaderEmail;
+  final String? ledEmail;
 
   HistoricalPairFeature({
     this.leaderEmail,
@@ -22,7 +22,9 @@ class _HistoricalPairFeatureState extends State<HistoricalPairFeature> {
   @override
   void initState() {
     super.initState();
-    _historicalRepository.obtainPair(widget.leaderEmail, widget.ledEmail).then((historical) {
+    _historicalRepository
+        .obtainPair(widget.leaderEmail, widget.ledEmail)
+        .then((historical) {
       setState(() {
         _historical = historical;
       });
@@ -41,10 +43,13 @@ class _HistoricalPairFeatureState extends State<HistoricalPairFeature> {
               padding: EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Row(children: [Icon(Icons.person), Text(o.leader.name)]),
-                  Row(children: [Icon(Icons.person), Text(o.led.name)]),
-                  Row(children: [Icon(Icons.today), Text(o.occurrence?.toIso8601String()?.substring(0, 10))]),
-                  Row(children: [Icon(Icons.feedback), Text(o.commentary)]),
+                  Row(children: [Icon(Icons.person), Text(o.leader!.name!)]),
+                  Row(children: [Icon(Icons.person), Text(o.led!.name!)]),
+                  Row(children: [
+                    Icon(Icons.today),
+                    Text(o.occurrence!.toIso8601String().substring(0, 10))
+                  ]),
+                  Row(children: [Icon(Icons.feedback), Text(o.commentary!)]),
                 ],
               ),
             ),

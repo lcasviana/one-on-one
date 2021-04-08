@@ -31,8 +31,8 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(AuthenticationService.name),
-                    Text(AuthenticationService.email),
+                    Text(AuthenticationService.name!),
+                    Text(AuthenticationService.email!),
                   ],
                 ),
               ),

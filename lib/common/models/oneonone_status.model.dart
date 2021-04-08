@@ -1,7 +1,7 @@
 class OneononeStatusModel {
-  DateTime lastOccurrence;
-  DateTime nextOccurrence;
-  bool isLate;
+  DateTime? lastOccurrence;
+  DateTime? nextOccurrence;
+  bool? isLate;
 
   OneononeStatusModel({
     this.lastOccurrence,
@@ -9,7 +9,7 @@ class OneononeStatusModel {
     this.isLate,
   });
 
-  OneononeStatusModel.fromJson(Map<String, dynamic> json) {
+  OneononeStatusModel.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
     this.lastOccurrence = DateTime.parse(json['lastOccurrence']);
     this.nextOccurrence = DateTime.parse(json['nextOccurrence']);

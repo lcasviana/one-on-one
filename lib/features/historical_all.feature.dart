@@ -15,7 +15,9 @@ class _HistoricalAllFeatureState extends State<HistoricalAllFeature> {
   @override
   void initState() {
     super.initState();
-    _historicalRepository.obtainAll(AuthenticationService.email).then((historical) {
+    _historicalRepository
+        .obtainAll(AuthenticationService.email!)
+        .then((historical) {
       setState(() {
         _historical = historical;
       });
@@ -34,10 +36,13 @@ class _HistoricalAllFeatureState extends State<HistoricalAllFeature> {
               padding: EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Row(children: [Icon(Icons.person), Text(o.leader.name)]),
-                  Row(children: [Icon(Icons.person), Text(o.led.name)]),
-                  Row(children: [Icon(Icons.today), Text(o.occurrence?.toIso8601String()?.substring(0, 10))]),
-                  Row(children: [Icon(Icons.feedback), Text(o.commentary)]),
+                  Row(children: [Icon(Icons.person), Text(o.leader!.name!)]),
+                  Row(children: [Icon(Icons.person), Text(o.led!.name!)]),
+                  Row(children: [
+                    Icon(Icons.today),
+                    Text(o.occurrence?.toIso8601String().substring(0, 10) ?? '')
+                  ]),
+                  Row(children: [Icon(Icons.feedback), Text(o.commentary!)]),
                 ],
               ),
             ),

@@ -11,12 +11,12 @@ class DashboardFeature extends StatefulWidget {
 
 class _DashboardFeatureState extends State<DashboardFeature> {
   final _dashboardRepository = DashboardRepository();
-  List<OneononeComposeModel> _oneonones = [];
+  List<OneononeComposeModel>? _oneonones = [];
 
   @override
   void initState() {
     super.initState();
-    _dashboardRepository.obtain(AuthenticationService.email).then((dashboard) {
+    _dashboardRepository.obtain(AuthenticationService.email!).then((dashboard) {
       setState(() {
         _oneonones = dashboard.oneonones;
       });
@@ -27,15 +27,19 @@ class _DashboardFeatureState extends State<DashboardFeature> {
     });
   }
 
-  void _showHistoricalPair(String leaderEmail, String ledEmail) {
+  void _showHistoricalPair(String? leaderEmail, String? ledEmail) {
     showGeneralDialog(
       context: context,
-      pageBuilder: (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation) {
+      pageBuilder: (BuildContext buildContext, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
         return Card(
           child: Column(
             children: [
-              HistoricalPairFeature(leaderEmail: leaderEmail, ledEmail: ledEmail),
-              IconButton(icon: Icon(Icons.close), onPressed: () => Navigator.of(context).pop()),
+              HistoricalPairFeature(
+                  leaderEmail: leaderEmail, ledEmail: ledEmail),
+              IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () => Navigator.of(context).pop()),
             ],
           ),
         );
@@ -44,24 +48,48 @@ class _DashboardFeatureState extends State<DashboardFeature> {
   }
 
   List<Widget> _renderList() {
-    return _oneonones
+    return _oneonones!
         .map(
           (compose) => Card(
             child: Container(
               padding: EdgeInsets.all(16),
               child: Column(
                 children: [
-                  Row(children: [Icon(Icons.person), Text(compose.oneonone.leader.name)]),
-                  Row(children: [Icon(Icons.person), Text(compose.oneonone.led.name)]),
-                  Row(children: [Icon(Icons.history_rounded), Text(compose.oneonone.frequency.toString())]),
-                  Row(children: [Icon(Icons.today), Text(compose.status?.lastOccurrence?.toIso8601String()?.substring(0, 10) ?? '')]),
-                  Row(children: [Icon(Icons.event_available), Text(compose.status?.nextOccurrence?.toIso8601String()?.substring(0, 10) ?? '')]),
-                  Row(children: [Icon(Icons.check), Text(compose.status?.isLate?.toString() ?? '')]),
+                  Row(children: [
+                    Icon(Icons.person),
+                    Text(compose.oneonone!.leader!.name!)
+                  ]),
+                  Row(children: [
+                    Icon(Icons.person),
+                    Text(compose.oneonone!.led!.name!)
+                  ]),
+                  Row(children: [
+                    Icon(Icons.history_rounded),
+                    Text(compose.oneonone!.frequency.toString())
+                  ]),
+                  Row(children: [
+                    Icon(Icons.today),
+                    Text(compose.status!.lastOccurrence!
+                        .toIso8601String()
+                        .substring(0, 10))
+                  ]),
+                  Row(children: [
+                    Icon(Icons.event_available),
+                    Text(compose.status!.nextOccurrence!
+                        .toIso8601String()
+                        .substring(0, 10))
+                  ]),
+                  Row(children: [
+                    Icon(Icons.check),
+                    Text(compose.status!.isLate!.toString())
+                  ]),
                   Row(
                     children: [
                       IconButton(
                           icon: Icon(Icons.history_rounded),
-                          onPressed: () => _showHistoricalPair(compose.oneonone.leader.email, compose.oneonone.led.email)),
+                          onPressed: () => _showHistoricalPair(
+                              compose.oneonone!.leader!.email,
+                              compose.oneonone!.led!.email)),
                     ],
                   ),
                 ],

@@ -10,7 +10,7 @@ class HistoricalRepository extends OneononesApiBase {
     return historical;
   }
 
-  Future<List<OneononeHistoricalModel>> obtainPair(String leaderEmail, String ledEmail) async {
+  Future<List<OneononeHistoricalModel>> obtainPair(String? leaderEmail, String? ledEmail) async {
     final json = await get(path: '$leaderEmail/$ledEmail');
     final historical = List<OneononeHistoricalModel>.from(json.map((j) => OneononeHistoricalModel.fromJson(j)));
     return historical;

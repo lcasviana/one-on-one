@@ -3,9 +3,9 @@ import 'package:oneonones/common/models/oneonone_historical.model.dart';
 import 'package:oneonones/common/models/oneonone_status.model.dart';
 
 class OneononeComposeModel {
-  OneononeModel oneonone;
-  List<OneononeHistoricalModel> historical;
-  OneononeStatusModel status;
+  OneononeModel? oneonone;
+  List<OneononeHistoricalModel>? historical;
+  OneononeStatusModel? status;
 
   OneononeComposeModel({
     this.oneonone,
@@ -13,10 +13,11 @@ class OneononeComposeModel {
     this.status,
   });
 
-  OneononeComposeModel.fromJson(Map<String, dynamic> json) {
+  OneononeComposeModel.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
     oneonone = OneononeModel.fromJson(json['oneonone']);
-    historical = List<OneononeHistoricalModel>.from(json['historical'].map((j) => OneononeHistoricalModel.fromJson(j)));
+    historical = List<OneononeHistoricalModel>.from(
+        json['historical'].map((j) => OneononeHistoricalModel.fromJson(j)));
     status = OneononeStatusModel.fromJson(json['status']);
   }
 }

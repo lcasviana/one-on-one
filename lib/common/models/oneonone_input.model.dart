@@ -1,9 +1,9 @@
 import 'package:oneonones/common/enumerations/oneonone_frequency.enum.dart';
 
 class OneononeInputModel {
-  String leaderEmail;
-  String ledEmail;
-  OneononeFrequencyEnum frequency;
+  String? leaderEmail;
+  String? ledEmail;
+  OneononeFrequencyEnum? frequency;
 
   OneononeInputModel({
     this.leaderEmail,
