@@ -21,12 +21,12 @@ class AuthenticationService implements IAuthenticationService {
     final employeeId = await _localStorageService.obtain(_localStorageKey);
     if (employeeId == null || employeeId.isEmpty) throw Exception('Empty local storage.');
     final employee = await _employeeRepository.obtain(employeeId);
-    _user = UserModel(employee.email, employee.name);
+    _user = UserModel(employee.id, employee.email, employee.name);
   }
 
   Future login(String email) async {
     final employee = await _employeeRepository.obtain(email);
-    _user = UserModel(employee.email, employee.name);
+    _user = UserModel(employee.id, employee.email, employee.name);
     await _localStorageService.insert(_localStorageKey, employee.email);
   }
 

@@ -1,12 +1,13 @@
+import 'package:oneonones/common/interfaces/repositories/oneonone.repository.i.dart';
 import 'package:oneonones/repositories/base/oneonones_api.base.dart';
-import 'package:oneonones/common/models/oneonone.model.dart';
+import 'package:oneonones/common/models/oneonone/oneonone.model.dart';
 
-class OneononeRepository extends OneononesApiBase {
+class OneononeRepository extends OneononesApiBase implements IOneononeRepository {
   OneononeRepository() : super('oneonones');
 
-  Future<List<OneononeModel>> obtain(String email) async {
-    final json = await get(path: email);
-    final oneonone = List<OneononeModel>.from(json.map((j) => OneononeModel.fromJson(j)));
+  Future<OneononeModel> obtain(String id) async {
+    final json = await get(path: id);
+    final oneonone = OneononeModel.fromJson(json);
     return oneonone;
   }
 }

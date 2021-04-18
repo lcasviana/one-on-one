@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:oneonones/common/models/error.model.dart';
 
 abstract class HttpClientBase {
@@ -20,7 +19,6 @@ abstract class HttpClientBase {
     _dio.interceptors.add(_logInterceptor);
   }
 
-  @protected
   Future<dynamic> get({
     String path = '',
     Map<String, dynamic>? queryParameters,
@@ -35,13 +33,12 @@ abstract class HttpClientBase {
       return response.data;
     } on DioError catch (error) {
       final httpError = ErrorModel.fromJson(error.response!.data);
-      return Future.error(httpError.errors!);
+      return Future.error(httpError.errors);
     } catch (e) {
       return Future.error(e);
     }
   }
 
-  @protected
   Future<dynamic> post({
     String path = '',
     FormData? body,
@@ -58,13 +55,12 @@ abstract class HttpClientBase {
       return response.data;
     } on DioError catch (error) {
       final httpError = ErrorModel.fromJson(error.response!.data);
-      return Future.error(httpError.errors!);
+      return Future.error(httpError.errors);
     } catch (e) {
       return Future.error(e);
     }
   }
 
-  @protected
   Future<dynamic> put({
     String path = '',
     FormData? body,
@@ -81,13 +77,12 @@ abstract class HttpClientBase {
       return response.data;
     } on DioError catch (error) {
       final httpError = ErrorModel.fromJson(error.response!.data);
-      return Future.error(httpError.errors!);
+      return Future.error(httpError.errors);
     } catch (e) {
       return Future.error(e);
     }
   }
 
-  @protected
   Future<dynamic> patch({
     String path = '',
     FormData? body,
@@ -104,13 +99,12 @@ abstract class HttpClientBase {
       return response.data;
     } on DioError catch (error) {
       final httpError = ErrorModel.fromJson(error.response!.data);
-      return Future.error(httpError.errors!);
+      return Future.error(httpError.errors);
     } catch (e) {
       return Future.error(e);
     }
   }
 
-  @protected
   Future<dynamic> delete({
     String path = '',
     Map<String, dynamic>? queryParameters,
@@ -125,7 +119,7 @@ abstract class HttpClientBase {
       return response.data;
     } on DioError catch (error) {
       final httpError = ErrorModel.fromJson(error.response!.data);
-      return Future.error(httpError.errors!);
+      return Future.error(httpError.errors);
     } catch (e) {
       return Future.error(e);
     }
