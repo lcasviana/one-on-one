@@ -1,4 +1,4 @@
-enum OneononeFrequencyEnum {
+enum FrequencyEnum {
   Weekly,
   Semimonthly,
   Monthly,
