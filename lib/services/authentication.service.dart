@@ -1,34 +1,36 @@
-import 'dart:async';
+import 'package:oneonones/common/interfaces/repositories/employee.repository.i.dart';
+import 'package:oneonones/common/interfaces/services/authentication.service.i.dart';
+import 'package:oneonones/common/interfaces/services/local_storage.service.i.dart';
+import 'package:oneonones/common/models/user.model.dart';
 
-import 'package:oneonones/repositories/employee.repository.dart';
-import 'package:oneonones/common/models/employee.model.dart';
-import 'package:oneonones/services/local_storage.service.dart';
+class AuthenticationService implements IAuthenticationService {
+  ILocalStorageService _localStorageService;
+  IEmployeeRepository _employeeRepository;
 
-abstract class AuthenticationService {
-  static final _localStorageKey = 'Authentication.Email';
-  static final _employeeRepository = EmployeeRepository();
+  final _localStorageKey = 'Authentication:Id';
+  UserModel? _user;
 
-  static EmployeeModel? _employee;
+  AuthenticationService(
+    this._localStorageService,
+    this._employeeRepository,
+  );
 
-  static Future<bool> startup() async {
-    final storageEmail = await (LocalStorageService.obtain(_localStorageKey)
-        as FutureOr<String>);
-    if (storageEmail.isEmpty) return false;
-    _employee = await _employeeRepository.obtain(storageEmail);
-    return _employee != null;
+  UserModel? get user => _user;
+
+  Future startup() async {
+    final employeeId = await _localStorageService.obtain(_localStorageKey);
+    if (employeeId == null || employeeId.isEmpty) throw Exception('Empty local storage.');
+    final employee = await _employeeRepository.obtain(employeeId);
+    _user = UserModel(employee.email, employee.name);
   }
 
-  static Future<bool> login(String email) async {
-    _employee = await _employeeRepository.obtain(email);
-    if (_employee == null) return false;
-    return await LocalStorageService.insert(
-        _localStorageKey, _employee!.email!);
+  Future login(String email) async {
+    final employee = await _employeeRepository.obtain(email);
+    _user = UserModel(employee.email, employee.name);
+    await _localStorageService.insert(_localStorageKey, employee.email);
   }
 
-  static Future<bool> logout() async {
-    return await LocalStorageService.remove(_localStorageKey);
+  Future logout() async {
+    await _localStorageService.remove(_localStorageKey);
   }
-
-  static String? get email => _employee?.email;
-  static String? get name => _employee?.name;
 }

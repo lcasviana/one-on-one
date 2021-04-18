@@ -1,21 +1,20 @@
+import 'package:oneonones/common/interfaces/services/local_storage.service.i.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class LocalStorageService {
-  static Future<String?> obtain(String key) async {
+class LocalStorageService implements ILocalStorageService {
+  Future<String?> obtain(String key) async {
     final sharedPreferences = await SharedPreferences.getInstance();
     final result = sharedPreferences.getString(key);
     return result;
   }
 
-  static Future<bool> insert(String key, String value) async {
+  Future insert(String key, String value) async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    final result = await sharedPreferences.setString(key, value);
-    return result;
+    await sharedPreferences.setString(key, value);
   }
 
-  static Future<bool> remove(String key) async {
+  Future remove(String key) async {
     final sharedPreferences = await SharedPreferences.getInstance();
-    final result = await sharedPreferences.remove(key);
-    return result;
+    await sharedPreferences.remove(key);
   }
 }
