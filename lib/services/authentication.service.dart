@@ -17,7 +17,7 @@ class AuthenticationService implements IAuthenticationService {
 
   UserModel? get user => _user;
 
-  Future startup() async {
+  Future init() async {
     final employeeId = await _localStorageService.obtain(_localStorageKey);
     if (employeeId == null || employeeId.isEmpty) throw Exception('Empty local storage.');
     final employee = await _employeeRepository.obtain(employeeId);
