@@ -9,7 +9,7 @@ import 'package:oneonones/repositories/oneonone.repository.dart';
 class HomeModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind((i) => HomeController()),
+    Bind((i) => HomeController(i.get(), i.get())),
     Bind((i) => DashboardRepository()),
     Bind((i) => EmployeeRepository()),
     Bind((i) => HistoricalRepository()),
