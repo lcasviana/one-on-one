@@ -10,4 +10,11 @@ class EmployeeRepository extends OneononesApiBase implements IEmployeeRepository
     final employee = EmployeeModel.fromJson(json);
     return employee;
   }
+
+  Future<EmployeeModel> obtainByEmail(String email) async {
+    final Map<String, dynamic> queryParameters = {'email': email};
+    final json = await get(queryParameters: queryParameters);
+    final employee = EmployeeModel.fromJson(json);
+    return employee;
+  }
 }

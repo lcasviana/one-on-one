@@ -18,14 +18,14 @@ class AuthenticationService implements IAuthenticationService {
   UserModel? get user => _user;
 
   Future init() async {
-    final employeeId = await _localStorageService.obtain(_localStorageKey);
-    if (employeeId == null || employeeId.isEmpty) throw Exception('Empty local storage.');
-    final employee = await _employeeRepository.obtain(employeeId);
+    final email = await _localStorageService.obtain(_localStorageKey);
+    if (email == null || email.isEmpty) throw Exception('Empty local storage.');
+    final employee = await _employeeRepository.obtainByEmail(email);
     _user = UserModel(employee.id, employee.email, employee.name);
   }
 
   Future login(String email) async {
-    final employee = await _employeeRepository.obtain(email);
+    final employee = await _employeeRepository.obtainByEmail(email);
     _user = UserModel(employee.id, employee.email, employee.name);
     await _localStorageService.insert(_localStorageKey, employee.email);
   }
