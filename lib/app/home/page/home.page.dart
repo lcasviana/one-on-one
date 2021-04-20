@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:oneonones/app/home/controller/home.controller.dart';
 
@@ -11,18 +12,40 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+    widget._homeController.getUser();
+    widget._homeController.getDashboard();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('One-on-one\'s')),
-      body: SingleChildScrollView(child: Container()),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: widget._homeController.navigationIndex,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Dashboard'),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: 'Historical'),
-        ],
-        onTap: (index) => widget._homeController.setNavigationIndex(index),
+      body: SingleChildScrollView(
+        child: Observer(
+          builder: (_) => widget._homeController.initialized
+              ? Column(
+                  children: [
+                    Column(
+                      children: [
+                        Text(widget._homeController.dashboard!.employee.id),
+                        Text(widget._homeController.dashboard!.employee.email),
+                        Text(widget._homeController.dashboard!.employee.name),
+                      ],
+                    ),
+                    ...widget._homeController.dashboard!.oneonones.map(
+                      (oneonone) => Column(
+                        children: [
+                          Text(oneonone.oneonone.leader.name),
+                          Text(oneonone.oneonone.led.name),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              : Text('...'),
+        ),
       ),
     );
   }

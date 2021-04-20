@@ -23,14 +23,11 @@ abstract class _HomeController with Store {
   @observable
   DashboardModel? _dashboard;
 
-  @observable
-  int _navigationIndex = 0;
+  @computed
+  DashboardModel? get dashboard => _dashboard;
 
   @computed
   bool get initialized => _user != null && _dashboard != null;
-
-  @computed
-  int get navigationIndex => _navigationIndex;
 
   @action
   void getUser() {
@@ -38,10 +35,8 @@ abstract class _HomeController with Store {
   }
 
   @action
-  void getDashboard() {
-    _dashboardRepository.obtain(_user!.id).then((dashboard) => _dashboard = dashboard);
+  Future getDashboard() async {
+    final dashboard = await _dashboardRepository.obtainById(_user!.id);
+    _dashboard = dashboard;
   }
-
-  @action
-  void setNavigationIndex(int index) => _navigationIndex = index;
 }

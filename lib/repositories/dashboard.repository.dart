@@ -5,8 +5,9 @@ import 'package:oneonones/repositories/base/oneonones_api.base.dart';
 class DashboardRepository extends OneononesApiBase implements IDashboardRepository {
   DashboardRepository() : super('dashboards');
 
-  Future<DashboardModel> obtain(String id) async {
-    final json = await get(path: id);
+  Future<DashboardModel> obtainById(String id) async {
+    final Map<String, dynamic> queryParameters = {'id': id};
+    final json = await get(queryParameters: queryParameters);
     final dashboard = DashboardModel.fromJson(json);
     return dashboard;
   }
