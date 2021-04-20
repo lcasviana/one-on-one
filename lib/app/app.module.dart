@@ -2,9 +2,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:oneonones/app/home/home.module.dart';
 import 'package:oneonones/app/landing/landing.module.dart';
 import 'package:oneonones/app/login/login.module.dart';
-import 'package:oneonones/repositories/employee.repository.dart';
-import 'package:oneonones/services/authentication.service.dart';
-import 'package:oneonones/services/local_storage.service.dart';
+import 'package:oneonones/core/repositories/employee.repository.dart';
+import 'package:oneonones/core/services/authentication.service.dart';
+import 'package:oneonones/core/services/local_storage.service.dart';
 
 class AppModule extends Module {
   @override

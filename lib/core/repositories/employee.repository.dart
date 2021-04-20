@@ -1,5 +1,5 @@
 import 'package:oneonones/common/interfaces/repositories/employee.repository.i.dart';
-import 'package:oneonones/repositories/base/oneonones_api.base.dart';
+import 'package:oneonones/core/repositories/base/oneonones_api.base.dart';
 import 'package:oneonones/common/models/employee/employee.model.dart';
 
 class EmployeeRepository extends OneononesApiBase implements IEmployeeRepository {

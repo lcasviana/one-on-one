@@ -24,6 +24,9 @@ abstract class _HomeController with Store {
   DashboardModel? _dashboard;
 
   @computed
+  UserModel? get user => _user;
+
+  @computed
   DashboardModel? get dashboard => _dashboard;
 
   @computed

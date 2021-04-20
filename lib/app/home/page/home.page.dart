@@ -14,8 +14,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    widget._homeController.getUser();
-    widget._homeController.getDashboard();
+    if (widget._homeController.user == null) widget._homeController.getUser();
+    if (widget._homeController.dashboard == null) widget._homeController.getDashboard();
   }
 
   @override

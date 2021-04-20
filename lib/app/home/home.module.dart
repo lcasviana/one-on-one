@@ -1,10 +1,10 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:oneonones/app/home/controller/home.controller.dart';
 import 'package:oneonones/app/home/page/home.page.dart';
-import 'package:oneonones/repositories/dashboard.repository.dart';
-import 'package:oneonones/repositories/employee.repository.dart';
-import 'package:oneonones/repositories/historical.repository.dart';
-import 'package:oneonones/repositories/oneonone.repository.dart';
+import 'package:oneonones/core/repositories/dashboard.repository.dart';
+import 'package:oneonones/core/repositories/employee.repository.dart';
+import 'package:oneonones/core/repositories/historical.repository.dart';
+import 'package:oneonones/core/repositories/oneonone.repository.dart';
 
 class HomeModule extends Module {
   @override
