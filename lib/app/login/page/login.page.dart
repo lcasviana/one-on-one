@@ -3,7 +3,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:oneonones/app/login/controller/login.controller.dart';
 
 class LoginPage extends StatelessWidget {
-  final LoginController _loginController = Modular.get();
+  final LoginController _loginController;
+
+  LoginPage(this._loginController);
 
   @override
   Widget build(BuildContext context) {

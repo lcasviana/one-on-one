@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:oneonones/app/home/controller/home.controller.dart';
+import 'package:oneonones/common/widgets/navigation_drawer.widget.dart';
 
 class HomePage extends StatefulWidget {
-  final HomeController _homeController = Modular.get();
+  final HomeController _homeController;
+
+  HomePage(this._homeController);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -22,24 +24,27 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('One-on-one\'s')),
+      drawer: NavigationDrawer(),
       body: SingleChildScrollView(
         child: Observer(
           builder: (_) => widget._homeController.initialized
-              ? Column(
+              ? ExpansionPanelList(
                   children: [
-                    Column(
-                      children: [
-                        Text(widget._homeController.dashboard!.employee.id),
-                        Text(widget._homeController.dashboard!.employee.email),
-                        Text(widget._homeController.dashboard!.employee.name),
-                      ],
-                    ),
                     ...widget._homeController.dashboard!.oneonones.map(
-                      (oneonone) => Column(
-                        children: [
-                          Text(oneonone.oneonone.leader.name),
-                          Text(oneonone.oneonone.led.name),
-                        ],
+                      (oneonone) => ExpansionPanel(
+                        headerBuilder: (context, isExpanded) => Column(
+                          children: [
+                            Text(oneonone.oneonone.leader.name),
+                            Text(oneonone.oneonone.led.name),
+                          ],
+                        ),
+                        body: Column(
+                          children: [
+                            Text(oneonone.status.lastOccurrence!.toIso8601String()),
+                            Text(oneonone.status.nextOccurrence!.toIso8601String()),
+                            Text(oneonone.status.isLate.toString()),
+                          ],
+                        ),
                       ),
                     ),
                   ],

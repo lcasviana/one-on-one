@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:oneonones/app/landing/controller/landing.controller.dart';
 
 class LandingPage extends StatefulWidget {
-  final LandingController _landingController = Modular.get();
+  final LandingController _landingController;
+
+  LandingPage(this._landingController);
 
   @override
   _LandingPageState createState() => _LandingPageState();
