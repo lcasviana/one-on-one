@@ -39,7 +39,6 @@ abstract class _HomeController with Store {
 
   @action
   Future getDashboard() async {
-    final dashboard = await _dashboardRepository.obtainById(_user!.id);
-    _dashboard = dashboard;
+    _dashboard = await _dashboardRepository.obtainById(_user!.id);
   }
 }

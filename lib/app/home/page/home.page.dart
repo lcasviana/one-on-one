@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:oneonones/app/home/controller/home.controller.dart';
+import 'package:oneonones/common/utils/datetime.util.dart';
 import 'package:oneonones/common/widgets/navigation_drawer.widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,21 +29,25 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Observer(
           builder: (_) => widget._homeController.initialized
-              ? ExpansionPanelList(
+              ? Column(
                   children: [
                     ...widget._homeController.dashboard!.oneonones.map(
-                      (oneonone) => ExpansionPanel(
-                        headerBuilder: (context, isExpanded) => Column(
+                      (compose) => Card(
+                        child: Column(
                           children: [
-                            Text(oneonone.oneonone.leader.name),
-                            Text(oneonone.oneonone.led.name),
-                          ],
-                        ),
-                        body: Column(
-                          children: [
-                            Text(oneonone.status.lastOccurrence!.toIso8601String()),
-                            Text(oneonone.status.nextOccurrence!.toIso8601String()),
-                            Text(oneonone.status.isLate.toString()),
+                            Text(compose.oneonone.leader.name),
+                            Text(compose.oneonone.led.name),
+                            Text(DatetimeUtil.toDateText(compose.status.lastOccurrence)!),
+                            Text(DatetimeUtil.toDateText(compose.status.nextOccurrence)!),
+                            Text(compose.status.isLate.toString()),
+                            ...compose.historical.map(
+                              (historical) => Row(
+                                children: [
+                                  Text(DatetimeUtil.toDateText(historical.occurrence)!),
+                                  Text(historical.commentary!),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
