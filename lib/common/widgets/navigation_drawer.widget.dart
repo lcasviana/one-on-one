@@ -11,7 +11,10 @@ class NavigationDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
-          DrawerHeader(child: Text('Head')),
+          UserAccountsDrawerHeader(
+            accountName: Text(_authenticationService.user!.name),
+            accountEmail: Text(_authenticationService.user!.email),
+          ),
           ListTile(
             title: Text('Logout'),
             onTap: () {
