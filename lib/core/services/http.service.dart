@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:oneonones/common/interfaces/services/http.service.i.dart';
 import 'package:oneonones/common/models/error.model.dart';
 
-abstract class HttpClientBase {
+class HttpService implements IHttpService {
   late Dio _dio;
 
   final _logInterceptor = LogInterceptor(
@@ -13,7 +14,7 @@ abstract class HttpClientBase {
     requestBody: false,
   );
 
-  HttpClientBase(String baseUrl) {
+  HttpService(String baseUrl) {
     final options = BaseOptions(baseUrl: baseUrl);
     _dio = Dio(options);
     _dio.interceptors.add(_logInterceptor);
@@ -22,13 +23,13 @@ abstract class HttpClientBase {
   Future<dynamic> get({
     String path = '',
     Map<String, dynamic>? queryParameters,
-    Options? options,
+    Map<String, dynamic>? headers,
   }) async {
     try {
       final response = await _dio.get(
         path,
         queryParameters: queryParameters,
-        options: options,
+        options: Options(headers: headers),
       );
       return response.data;
     } on DioError catch (error) {
@@ -41,16 +42,16 @@ abstract class HttpClientBase {
 
   Future<dynamic> post({
     String path = '',
-    FormData? body,
+    Map<String, dynamic>? body,
     Map<String, dynamic>? queryParameters,
-    Options? options,
+    Map<String, dynamic>? headers,
   }) async {
     try {
       final response = await _dio.post(
         path,
-        data: body,
+        data: body == null ? null : FormData.fromMap(body),
         queryParameters: queryParameters,
-        options: options,
+        options: Options(headers: headers),
       );
       return response.data;
     } on DioError catch (error) {
@@ -63,16 +64,16 @@ abstract class HttpClientBase {
 
   Future<dynamic> put({
     String path = '',
-    FormData? body,
+    Map<String, dynamic>? body,
     Map<String, dynamic>? queryParameters,
-    Options? options,
+    Map<String, dynamic>? headers,
   }) async {
     try {
       final response = await _dio.put(
         path,
-        data: body,
+        data: body == null ? null : FormData.fromMap(body),
         queryParameters: queryParameters,
-        options: options,
+        options: Options(headers: headers),
       );
       return response.data;
     } on DioError catch (error) {
@@ -85,16 +86,16 @@ abstract class HttpClientBase {
 
   Future<dynamic> patch({
     String path = '',
-    FormData? body,
+    Map<String, dynamic>? body,
     Map<String, dynamic>? queryParameters,
-    Options? options,
+    Map<String, dynamic>? headers,
   }) async {
     try {
       final response = await _dio.patch(
         path,
-        data: body,
+        data: body == null ? null : FormData.fromMap(body),
         queryParameters: queryParameters,
-        options: options,
+        options: Options(headers: headers),
       );
       return response.data;
     } on DioError catch (error) {
@@ -108,13 +109,13 @@ abstract class HttpClientBase {
   Future<dynamic> delete({
     String path = '',
     Map<String, dynamic>? queryParameters,
-    Options? options,
+    Map<String, dynamic>? headers,
   }) async {
     try {
       final response = await _dio.delete(
         path,
         queryParameters: queryParameters,
-        options: options,
+        options: Options(headers: headers),
       );
       return response.data;
     } on DioError catch (error) {

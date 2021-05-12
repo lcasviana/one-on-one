@@ -1,19 +1,22 @@
 import 'package:oneonones/common/interfaces/repositories/employee.repository.i.dart';
-import 'package:oneonones/core/repositories/base/oneonones_api.base.dart';
+import 'package:oneonones/common/interfaces/services/http.service.i.dart';
 import 'package:oneonones/common/models/employee/employee.model.dart';
 
-class EmployeeRepository extends OneononesApiBase implements IEmployeeRepository {
-  EmployeeRepository() : super('employees');
+class EmployeeRepository implements IEmployeeRepository {
+  final IHttpService _http;
+  final _resource = 'employees';
+
+  EmployeeRepository(this._http);
 
   Future<EmployeeModel> obtain(String id) async {
-    final json = await get(path: id);
+    final json = await _http.get(path: '$_resource/$id');
     final employee = EmployeeModel.fromJson(json);
     return employee;
   }
 
   Future<EmployeeModel> obtainByEmail(String email) async {
     final Map<String, dynamic> queryParameters = {'email': email};
-    final json = await get(queryParameters: queryParameters);
+    final json = await _http.get(path: _resource, queryParameters: queryParameters);
     final employee = EmployeeModel.fromJson(json);
     return employee;
   }
