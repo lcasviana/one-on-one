@@ -13,6 +13,6 @@ abstract class _LandingController with Store {
 
   @action
   void init() {
-    _authenticationService.init().then((_) => Modular.to.navigate('/')).catchError((_) => Modular.to.navigate('/login'));
+    _authenticationService.init().then((_) => Modular.to.navigate('/oneonone')).catchError((_) => Modular.to.navigate('/login'));
   }
 }

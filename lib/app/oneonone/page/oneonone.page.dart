@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:oneonones/app/home/controller/home.controller.dart';
+import 'package:oneonones/app/oneonone/controller/oneonone.controller.dart';
 import 'package:oneonones/common/utils/datetime.util.dart';
 import 'package:oneonones/common/widgets/navigation_drawer.widget.dart';
 
-class HomePage extends StatefulWidget {
-  final HomeController _homeController;
+class OneononePage extends StatefulWidget {
+  final OneononeController _homeController;
 
-  HomePage(this._homeController);
+  OneononePage(this._homeController);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _OneononePageState createState() => _OneononePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _OneononePageState extends State<OneononePage> {
   @override
   void initState() {
     super.initState();

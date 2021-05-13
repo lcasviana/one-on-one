@@ -1,5 +1,5 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:oneonones/app/home/home.module.dart';
+import 'package:oneonones/app/oneonone/oneonone.module.dart';
 import 'package:oneonones/app/landing/landing.module.dart';
 import 'package:oneonones/app/login/login.module.dart';
 import 'package:oneonones/common/constants/configuration.constant.dart';
@@ -34,8 +34,8 @@ class AppModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ModuleRoute('/', module: HomeModule()),
-    ModuleRoute('/landing', module: LandingModule()),
+    ModuleRoute('/', module: LandingModule()),
     ModuleRoute('/login', module: LoginModule()),
+    ModuleRoute('/oneonone', module: OneononeModule()),
   ];
 }

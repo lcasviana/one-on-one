@@ -4,15 +4,15 @@ import 'package:oneonones/common/interfaces/services/authentication.service.i.da
 import 'package:oneonones/common/models/dashboard/dashboard.model.dart';
 import 'package:oneonones/common/models/user.model.dart';
 
-part 'home.controller.g.dart';
+part 'oneonone.controller.g.dart';
 
-class HomeController = _HomeController with _$HomeController;
+class OneononeController = _OneononeController with _$OneononeController;
 
-abstract class _HomeController with Store {
+abstract class _OneononeController with Store {
   final IDashboardRepository _dashboardRepository;
   final IAuthenticationService _authenticationService;
 
-  _HomeController(
+  _OneononeController(
     this._dashboardRepository,
     this._authenticationService,
   );

@@ -6,7 +6,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'One-on-one\'s',
-      initialRoute: '/landing',
+      initialRoute: '/',
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.teal,
