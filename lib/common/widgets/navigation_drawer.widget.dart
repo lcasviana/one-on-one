@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:oneonones/common/interfaces/services/authentication.service.i.dart';
+import 'package:oneonones/common/models/user.model.dart';
 
-class NavigationDrawer extends StatelessWidget {
-  // TODO: Validade this implementation
-  final IAuthenticationService _authenticationService = Modular.get();
+class NavigationDrawer extends StatefulWidget {
+  final UserModel _user;
 
+  NavigationDrawer(this._user);
+
+  @override
+  _NavigationDrawer createState() => _NavigationDrawer();
+}
+
+class _NavigationDrawer extends State<NavigationDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text(_authenticationService.user!.name),
-            accountEmail: Text(_authenticationService.user!.email),
-          ),
-          ListTile(
-            title: Text('Logout'),
-            onTap: () {
-              _authenticationService.logout().then((_) => Modular.to.navigate('/login')).catchError(() {});
-            },
+            accountName: Text(widget._user.name),
+            accountEmail: Text(widget._user.email),
           ),
         ],
       ),

@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text('One-on-one\'s')),
-      drawer: NavigationDrawer(),
+      drawer: NavigationDrawer(widget._homeController.user!),
       body: SingleChildScrollView(
         child: Observer(
           builder: (_) => widget._homeController.initialized
