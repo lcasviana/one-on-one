@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:oneonones/app/oneonone/controller/oneonone.controller.dart';
+import 'package:oneonones/app/oneonone/widgets/oneonone_insert.widget.dart';
 import 'package:oneonones/common/utils/datetime.util.dart';
 import 'package:oneonones/common/widgets/navigation_drawer.widget.dart';
 
 class OneononePage extends StatefulWidget {
-  final OneononeController _homeController;
+  final OneononeController _oneononeController;
 
-  OneononePage(this._homeController);
+  OneononePage(this._oneononeController);
 
   @override
   _OneononePageState createState() => _OneononePageState();
@@ -17,25 +18,27 @@ class _OneononePageState extends State<OneononePage> {
   @override
   void initState() {
     super.initState();
-    if (widget._homeController.user == null) widget._homeController.getUser();
-    if (widget._homeController.dashboard == null) widget._homeController.getDashboard();
+    final oneononeController = widget._oneononeController;
+    if (oneononeController.dashboard == null) oneononeController.getDashboard();
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final oneononeController = widget._oneononeController;
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text('One-on-one\'s')),
-      drawer: NavigationDrawer(widget._homeController.user!),
+      drawer: NavigationDrawer(oneononeController.user),
       body: SingleChildScrollView(
         child: Observer(
-          builder: (_) => widget._homeController.initialized
+          builder: (_) => oneononeController.initialized
               ? Container(
                   width: double.infinity,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      ...widget._homeController.dashboard!.oneonones.map(
+                      OneononeInsert(),
+                      ...oneononeController.dashboard!.oneonones.map(
                         (compose) => Container(
                           width: size.width <= 800 ? size.width : 800,
                           child: Card(
@@ -45,8 +48,8 @@ class _OneononePageState extends State<OneononePage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  if (widget._homeController.user!.id != compose.oneonone.leader.id) Text('Leader: ${compose.oneonone.leader.name}'),
-                                  if (widget._homeController.user!.id != compose.oneonone.led.id) Text('Led: ${compose.oneonone.led.name}'),
+                                  if (oneononeController.user.id != compose.oneonone.leader.id) Text('Leader: ${compose.oneonone.leader.name}'),
+                                  if (oneononeController.user.id != compose.oneonone.led.id) Text('Led: ${compose.oneonone.led.name}'),
                                   Text('Last occurrence: ${DatetimeUtil.toDateText(compose.status.lastOccurrence)!}'),
                                   Text('Next occurrence: ${DatetimeUtil.toDateText(compose.status.nextOccurrence)!}'),
                                   Text('Is Late: ${compose.status.isLate! ? 'Yes' : 'No'}'),

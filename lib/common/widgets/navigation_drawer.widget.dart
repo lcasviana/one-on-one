@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oneonones/common/models/user.model.dart';
 
 class NavigationDrawer extends StatefulWidget {
-  final UserModel _user;
+  final UserModel? _user;
 
   NavigationDrawer(this._user);
 
@@ -13,13 +13,15 @@ class NavigationDrawer extends StatefulWidget {
 class _NavigationDrawer extends State<NavigationDrawer> {
   @override
   Widget build(BuildContext context) {
+    final user = widget._user;
     return Drawer(
       child: ListView(
         children: [
-          UserAccountsDrawerHeader(
-            accountName: Text(widget._user.name),
-            accountEmail: Text(widget._user.email),
-          ),
+          if (user != null)
+            UserAccountsDrawerHeader(
+              accountName: Text(user.name),
+              accountEmail: Text(user.email),
+            ),
         ],
       ),
     );

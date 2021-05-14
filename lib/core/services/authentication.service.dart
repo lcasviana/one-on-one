@@ -4,18 +4,18 @@ import 'package:oneonones/common/interfaces/services/local_storage.service.i.dar
 import 'package:oneonones/common/models/user.model.dart';
 
 class AuthenticationService implements IAuthenticationService {
-  ILocalStorageService _localStorageService;
-  IEmployeeRepository _employeeRepository;
+  final ILocalStorageService _localStorageService;
+  final IEmployeeRepository _employeeRepository;
+  late UserModel _user;
 
   final _localStorageKey = 'Authentication:Id';
-  UserModel? _user;
 
   AuthenticationService(
     this._localStorageService,
     this._employeeRepository,
   );
 
-  UserModel? get user => _user;
+  UserModel get user => _user;
 
   Future init() async {
     final email = await _localStorageService.obtain(_localStorageKey);

@@ -10,6 +10,7 @@ import 'package:oneonones/common/interfaces/repositories/oneonone.repository.i.d
 import 'package:oneonones/common/interfaces/services/authentication.service.i.dart';
 import 'package:oneonones/common/interfaces/services/http.service.i.dart';
 import 'package:oneonones/common/interfaces/services/local_storage.service.i.dart';
+import 'package:oneonones/core/guards/authentication.guard.dart';
 import 'package:oneonones/core/repositories/dashboard.repository.dart';
 import 'package:oneonones/core/repositories/employee.repository.dart';
 import 'package:oneonones/core/repositories/historical.repository.dart';
@@ -34,8 +35,21 @@ class AppModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ModuleRoute('/', module: LandingModule()),
-    ModuleRoute('/login', module: LoginModule()),
-    ModuleRoute('/oneonone', module: OneononeModule()),
+    ModuleRoute(
+      '/',
+      module: LandingModule(),
+    ),
+    ModuleRoute(
+      '/login',
+      module: LoginModule(),
+      guards: [AuthenticationGuard()],
+      guardedRoute: '/oneonone',
+    ),
+    ModuleRoute(
+      '/oneonone',
+      module: OneononeModule(),
+      guards: [AuthenticationGuard()],
+      guardedRoute: '/login',
+    ),
   ];
 }

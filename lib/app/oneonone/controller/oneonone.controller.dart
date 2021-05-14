@@ -18,27 +18,19 @@ abstract class _OneononeController with Store {
   );
 
   @observable
-  UserModel? _user;
-
-  @observable
   DashboardModel? _dashboard;
 
   @computed
-  UserModel? get user => _user;
+  UserModel get user => _authenticationService.user;
 
   @computed
   DashboardModel? get dashboard => _dashboard;
 
   @computed
-  bool get initialized => _user != null && _dashboard != null;
-
-  @action
-  void getUser() {
-    _user = _authenticationService.user;
-  }
+  bool get initialized => dashboard != null;
 
   @action
   Future getDashboard() async {
-    _dashboard = await _dashboardRepository.obtainById(_user!.id);
+    _dashboard = await _dashboardRepository.obtainById(user.id);
   }
 }
