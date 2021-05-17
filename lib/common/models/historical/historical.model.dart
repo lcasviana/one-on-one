@@ -1,4 +1,5 @@
 import 'package:oneonones/common/models/employee/employee.model.dart';
+import 'package:oneonones/common/utils/datetime.util.dart';
 
 class HistoricalModel {
   EmployeeModel leader;
@@ -20,5 +21,14 @@ class HistoricalModel {
       DateTime.parse(json['occurrence']),
       json['commentary'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'leader': leader.toJson(),
+      'led': led.toJson(),
+      'occurrence': DatetimeUtil.toDateText(occurrence),
+      'commentary': commentary,
+    };
   }
 }

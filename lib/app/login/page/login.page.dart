@@ -35,17 +35,14 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 16),
-                          ButtonTheme(
-                            colorScheme: ColorScheme.dark(),
-                            child: ElevatedButton(
-                              child: Padding(child: Text('Login'), padding: EdgeInsets.all(8)),
-                              onPressed: () {
-                                _loginController.login().then((_) => Modular.to.navigate('/')).catchError((error) {
-                                  final snackBar = SnackBar(content: Text(error.toString()));
-                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                });
-                              },
-                            ),
+                          ElevatedButton(
+                            child: Padding(child: Text('Login'), padding: EdgeInsets.all(8)),
+                            onPressed: () {
+                              _loginController.login().then((_) => Modular.to.navigate('/')).catchError((error) {
+                                final snackBar = SnackBar(content: Text(error.toString()));
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              });
+                            },
                           ),
                         ],
                       ),

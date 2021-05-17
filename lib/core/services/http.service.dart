@@ -5,19 +5,19 @@ import 'package:oneonones/common/models/error.model.dart';
 class HttpService implements IHttpService {
   late Dio _dio;
 
-  final _logInterceptor = LogInterceptor(
-    responseBody: true,
-    error: true,
-    requestHeader: false,
-    responseHeader: true,
-    request: false,
-    requestBody: false,
-  );
+  // final _logInterceptor = LogInterceptor(
+  //   responseBody: true,
+  //   error: true,
+  //   requestHeader: false,
+  //   responseHeader: true,
+  //   request: false,
+  //   requestBody: false,
+  // );
 
   HttpService(String baseUrl) {
     final options = BaseOptions(baseUrl: baseUrl);
     _dio = Dio(options);
-    _dio.interceptors.add(_logInterceptor);
+    // _dio.interceptors.add(_logInterceptor);
   }
 
   Future<dynamic> get({

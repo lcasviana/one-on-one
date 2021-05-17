@@ -20,4 +20,12 @@ class OneononeModel {
       FrequencyUtil.toEnum(json['frequency']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'leader': leader.toJson(),
+      'led': led.toJson(),
+      'frequency': FrequencyUtil.toInt(frequency),
+    };
+  }
 }
