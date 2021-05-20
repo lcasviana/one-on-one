@@ -5,7 +5,7 @@ import 'package:oneonones/app/oneonone/page/oneonone.page.dart';
 class OneononeModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind((i) => OneononeController(i.get(), i.get())),
+    Bind((i) => OneononeController(i.get(), i.get(), i.get(), i.get(), i.get())),
   ];
 
   @override

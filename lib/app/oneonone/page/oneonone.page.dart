@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:oneonones/app/oneonone/controller/oneonone.controller.dart';
 import 'package:oneonones/app/oneonone/widgets/oneonone_insert.widget.dart';
+import 'package:oneonones/common/enumerations/frequency.enum.dart';
 import 'package:oneonones/common/utils/datetime.util.dart';
 import 'package:oneonones/common/widgets/navigation_drawer.widget.dart';
 
@@ -18,8 +19,7 @@ class _OneononePageState extends State<OneononePage> {
   @override
   void initState() {
     super.initState();
-    final oneononeController = widget._oneononeController;
-    if (oneononeController.dashboard == null) oneononeController.getDashboard();
+    widget._oneononeController.init();
   }
 
   @override
@@ -38,7 +38,7 @@ class _OneononePageState extends State<OneononePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       OneononeInsert(),
-                      ...oneononeController.dashboard!.oneonones.map(
+                      ...oneononeController.dashboard.oneonones.map(
                         (compose) => Container(
                           width: size.width <= 800 ? size.width : 800,
                           child: Card(
