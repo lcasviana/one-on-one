@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:oneonones/app/oneonone/controller/oneonone.controller.dart';
+import 'package:oneonones/common/enumerations/frequency.enum.dart';
 import 'package:oneonones/common/models/dashboard/oneonone_compose.model.dart';
 import 'package:oneonones/common/models/employee/employee.model.dart';
 import 'package:oneonones/common/utils/datetime.util.dart';
+import 'package:oneonones/common/utils/frequency.util.dart';
 import 'package:oneonones/common/widgets/navigation_drawer.widget.dart';
 
 class OneononePage extends StatefulWidget {
@@ -93,30 +95,92 @@ class _OneononePageState extends State<OneononePage> {
     final size = MediaQuery.of(context).size;
     final maxWidth = 600.0;
     final content = <Widget>[
-      DropdownButton<EmployeeModel>(
-        isExpanded: true,
-        value: oneononeController.oneononeInsertPartner,
-        items: [
-          DropdownMenuItem<EmployeeModel>(child: Text(''), value: null),
-          ...oneononeController.employees.map((e) => DropdownMenuItem<EmployeeModel>(child: Text(e.name), value: e)),
-        ],
-        onChanged: (value) => oneononeController.oneononeInsertPartner = value,
+      Container(
+        padding: EdgeInsets.only(bottom: 16),
+        child: InputDecorator(
+          decoration: InputDecoration(
+            labelText: 'Who is your mate?',
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          ),
+          isEmpty: oneononeController.oneononeInsertPartner == null,
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<EmployeeModel>(
+              value: oneononeController.oneononeInsertPartner,
+              isDense: true,
+              onChanged: (partner) => oneononeController.oneononeInsertPartner = partner,
+              items: [
+                DropdownMenuItem<EmployeeModel>(child: Text(''), value: null),
+                ...oneononeController.employees.map((e) => DropdownMenuItem<EmployeeModel>(child: Text(e.name), value: e)),
+              ],
+            ),
+          ),
+        ),
       ),
-      DropdownButton<bool>(
-        isExpanded: true,
-        value: oneononeController.oneononeInsertLeader,
-        items: [
-          DropdownMenuItem<bool>(child: Text(''), value: null),
-          ...[true, false].map((v) => DropdownMenuItem<bool>(child: Text(v ? 'Leader' : 'Led'), value: v)),
-        ],
-        onChanged: (value) => oneononeController.oneononeInsertLeader = value,
+      Container(
+        padding: EdgeInsets.only(bottom: 16),
+        child: InputDecorator(
+          decoration: InputDecoration(
+            labelText: 'Is this person your leader or your led?',
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          ),
+          isEmpty: oneononeController.oneononeInsertLeader == null,
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<bool>(
+              value: oneononeController.oneononeInsertLeader,
+              isDense: true,
+              onChanged: (leader) => oneononeController.oneononeInsertLeader = leader,
+              items: [
+                DropdownMenuItem<bool>(child: Text(''), value: null),
+                ...[true, false].map((v) => DropdownMenuItem<bool>(child: Text(v ? 'Leader' : 'Led'), value: v)),
+              ],
+            ),
+          ),
+        ),
+      ),
+      Container(
+        padding: EdgeInsets.only(bottom: 16),
+        child: InputDecorator(
+          decoration: InputDecoration(
+            labelText: 'Which frequency you will meet?',
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          ),
+          isEmpty: oneononeController.oneononeInsertFrequency == null,
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<FrequencyEnum>(
+              value: oneononeController.oneononeInsertFrequency,
+              isDense: true,
+              onChanged: (frequency) => oneononeController.oneononeInsertFrequency = frequency,
+              items: [
+                DropdownMenuItem<FrequencyEnum>(child: Text(''), value: null),
+                ...FrequencyEnum.values.map((e) => DropdownMenuItem<FrequencyEnum>(child: Text(FrequencyUtil.toText(e)), value: e)),
+              ],
+            ),
+          ),
+        ),
+      ),
+      ElevatedButton(
+        onPressed: () {
+          if (oneononeController.oneononeInsertPartner == null ||
+              oneononeController.oneononeInsertLeader == null ||
+              oneononeController.oneononeInsertFrequency == null) return null;
+          oneononeController.oneononeInsert(
+            oneononeController.oneononeInsertLeader! ? oneononeController.oneononeInsertPartner!.id : oneononeController.user.id,
+            oneononeController.oneononeInsertLeader! ? oneononeController.user.id : oneononeController.oneononeInsertPartner!.id,
+            oneononeController.oneononeInsertFrequency!,
+          );
+        },
+        child: Text('Register one-on-one'),
       ),
     ];
 
     return Container(
       width: size.width <= maxWidth ? size.width : maxWidth,
-      child: Column(
-        children: content,
+      child: Card(
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(16),
+          child: Column(children: content),
+        ),
       ),
     );
   }
