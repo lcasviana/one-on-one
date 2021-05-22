@@ -1,5 +1,5 @@
 abstract class DatetimeUtil {
-  static String? toDateText(DateTime? datetime) {
+  static String toDateText(DateTime? datetime) {
     if (datetime == null) return '';
     final iso = datetime.toIso8601String();
     final isoDate = iso.substring(0, 10);
