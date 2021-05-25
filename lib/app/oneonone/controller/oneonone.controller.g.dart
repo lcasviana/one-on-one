@@ -134,6 +134,40 @@ mixin _$OneononeController on _OneononeController, Store {
     });
   }
 
+  final _$historicalInsertDatetimeTextAtom =
+      Atom(name: '_OneononeController.historicalInsertDatetimeText');
+
+  @override
+  TextEditingController get historicalInsertDatetimeText {
+    _$historicalInsertDatetimeTextAtom.reportRead();
+    return super.historicalInsertDatetimeText;
+  }
+
+  @override
+  set historicalInsertDatetimeText(TextEditingController value) {
+    _$historicalInsertDatetimeTextAtom
+        .reportWrite(value, super.historicalInsertDatetimeText, () {
+      super.historicalInsertDatetimeText = value;
+    });
+  }
+
+  final _$historicalInsertDatetimeAtom =
+      Atom(name: '_OneononeController.historicalInsertDatetime');
+
+  @override
+  DateTime? get historicalInsertDatetime {
+    _$historicalInsertDatetimeAtom.reportRead();
+    return super.historicalInsertDatetime;
+  }
+
+  @override
+  set historicalInsertDatetime(DateTime? value) {
+    _$historicalInsertDatetimeAtom
+        .reportWrite(value, super.historicalInsertDatetime, () {
+      super.historicalInsertDatetime = value;
+    });
+  }
+
   final _$initAsyncAction = AsyncAction('_OneononeController.init');
 
   @override
@@ -188,11 +222,24 @@ mixin _$OneononeController on _OneononeController, Store {
   }
 
   @override
+  void historicalInsertSetDatetime(DateTime? datetime) {
+    final _$actionInfo = _$_OneononeControllerActionController.startAction(
+        name: '_OneononeController.historicalInsertSetDatetime');
+    try {
+      return super.historicalInsertSetDatetime(datetime);
+    } finally {
+      _$_OneononeControllerActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 oneononeInsertPartner: ${oneononeInsertPartner},
 oneononeInsertFrequency: ${oneononeInsertFrequency},
 oneononeInsertLeader: ${oneononeInsertLeader},
+historicalInsertDatetimeText: ${historicalInsertDatetimeText},
+historicalInsertDatetime: ${historicalInsertDatetime},
 initialized: ${initialized},
 user: ${user},
 employees: ${employees},

@@ -94,6 +94,7 @@ class _OneononePageState extends State<OneononePage> {
     final oneononeController = widget._oneononeController;
     final size = MediaQuery.of(context).size;
     final maxWidth = 600.0;
+
     final content = <Widget>[
       Container(
         padding: EdgeInsets.only(bottom: 16),
@@ -110,7 +111,9 @@ class _OneononePageState extends State<OneononePage> {
               onChanged: (partner) => oneononeController.oneononeInsertPartner = partner,
               items: [
                 DropdownMenuItem<EmployeeModel>(child: Text(''), value: null),
-                ...oneononeController.employees.map((e) => DropdownMenuItem<EmployeeModel>(child: Text(e.name), value: e)),
+                ...oneononeController.employees
+                    .where((e) => e.id != oneononeController.user.id)
+                    .map((e) => DropdownMenuItem<EmployeeModel>(child: Text(e.name), value: e)),
               ],
             ),
           ),
@@ -158,18 +161,27 @@ class _OneononePageState extends State<OneononePage> {
           ),
         ),
       ),
-      ElevatedButton(
+      ElevatedButton.icon(
+        style: ElevatedButton.styleFrom(primary: Colors.teal, padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16)),
+        icon: Icon(Icons.add),
+        label: Text('Register one-on-one', style: TextStyle(fontSize: 16)),
         onPressed: () {
           if (oneononeController.oneononeInsertPartner == null ||
               oneononeController.oneononeInsertLeader == null ||
               oneononeController.oneononeInsertFrequency == null) return null;
-          oneononeController.oneononeInsert(
-            oneononeController.oneononeInsertLeader! ? oneononeController.oneononeInsertPartner!.id : oneononeController.user.id,
-            oneononeController.oneononeInsertLeader! ? oneononeController.user.id : oneononeController.oneononeInsertPartner!.id,
-            oneononeController.oneononeInsertFrequency!,
-          );
+          oneononeController
+              .oneononeInsert(
+                  oneononeController.oneononeInsertLeader! ? oneononeController.oneononeInsertPartner!.id : oneononeController.user.id,
+                  oneononeController.oneononeInsertLeader! ? oneononeController.user.id : oneononeController.oneononeInsertPartner!.id,
+                  oneononeController.oneononeInsertFrequency!)
+              .then((_) {
+            final snackBar = SnackBar(content: Text('Created!'));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }).catchError((error) {
+            final snackBar = SnackBar(content: Text(error.toString()));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          });
         },
-        child: Text('Register one-on-one'),
       ),
     ];
 
@@ -179,13 +191,64 @@ class _OneononePageState extends State<OneononePage> {
         child: Container(
           width: double.infinity,
           padding: EdgeInsets.all(16),
-          child: Column(children: content),
+          child: Column(
+            children: content,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+          ),
         ),
       ),
     );
   }
 
   Widget _registerHistorical() {
-    return Column();
+    final oneononeController = widget._oneononeController;
+    final size = MediaQuery.of(context).size;
+    final maxWidth = 600.0;
+    final selectedDate = oneononeController.historicalInsertDatetime ?? DateTime.now();
+
+    final content = <Widget>[
+      // InputDatePickerFormField(
+      //   initialDate: null,
+      //   firstDate: DateTime.parse('2009-10-28'),
+      //   lastDate: DateTime.now(),
+      // ),
+      GestureDetector(
+        onTap: () {
+          showDatePicker(
+            context: context,
+            initialDate: selectedDate,
+            firstDate: DateTime.parse('2009-10-28'),
+            lastDate: DateTime.now(),
+          ).then((picked) {
+            if (picked != null && picked != selectedDate) {
+              oneononeController.historicalInsertDatetime = picked;
+            }
+          });
+        },
+        child: AbsorbPointer(
+          child: TextFormField(
+            controller: oneononeController.historicalInsertDatetimeText,
+            decoration: InputDecoration(
+              labelText: "Date",
+              icon: Icon(Icons.calendar_today),
+            ),
+          ),
+        ),
+      ),
+    ];
+
+    return Container(
+      width: size.width <= maxWidth ? size.width : maxWidth,
+      child: Card(
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(16),
+          child: Column(
+            children: content,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+          ),
+        ),
+      ),
+    );
   }
 }

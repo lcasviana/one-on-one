@@ -35,8 +35,10 @@ class LoginPage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 16),
-                          ElevatedButton(
-                            child: Padding(child: Text('Login'), padding: EdgeInsets.all(8)),
+                          ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(primary: Colors.teal, padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16)),
+                            icon: Icon(Icons.login),
+                            label: Text('Login', style: TextStyle(fontSize: 16)),
                             onPressed: () {
                               _loginController.login().then((_) => Modular.to.navigate('/')).catchError((error) {
                                 final snackBar = SnackBar(content: Text(error.toString()));

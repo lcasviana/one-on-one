@@ -7,6 +7,11 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'One-on-one\'s',
       initialRoute: '/',
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.teal,
+        accentColor: Colors.tealAccent,
+      ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.teal,

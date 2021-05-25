@@ -5,19 +5,19 @@ import 'package:oneonones/common/models/error.model.dart';
 class HttpService implements IHttpService {
   late Dio _dio;
 
-  // final _logInterceptor = LogInterceptor(
-  //   responseBody: true,
-  //   error: true,
-  //   requestHeader: false,
-  //   responseHeader: true,
-  //   request: false,
-  //   requestBody: false,
-  // );
+  final _logInterceptor = LogInterceptor(
+    responseBody: true,
+    error: true,
+    requestHeader: true,
+    responseHeader: true,
+    request: true,
+    requestBody: true,
+  );
 
   HttpService(String baseUrl) {
     final options = BaseOptions(baseUrl: baseUrl);
     _dio = Dio(options);
-    // _dio.interceptors.add(_logInterceptor);
+    _dio.interceptors.add(_logInterceptor);
   }
 
   Future<dynamic> get({
@@ -33,6 +33,7 @@ class HttpService implements IHttpService {
       );
       return response.data;
     } on DioError catch (error) {
+      if (error.response?.data == null) return Future.error(ErrorModel(['Unexpected error.']));
       final httpError = ErrorModel.fromJson(error.response!.data);
       return Future.error(httpError.errors);
     } catch (e) {
@@ -49,12 +50,13 @@ class HttpService implements IHttpService {
     try {
       final response = await _dio.post(
         path,
-        data: body == null ? null : FormData.fromMap(body),
+        data: body,
         queryParameters: queryParameters,
         options: Options(headers: headers),
       );
       return response.data;
     } on DioError catch (error) {
+      if (error.response?.data == null) return Future.error(ErrorModel(['Unexpected error.']));
       final httpError = ErrorModel.fromJson(error.response!.data);
       return Future.error(httpError.errors);
     } catch (e) {
@@ -71,12 +73,13 @@ class HttpService implements IHttpService {
     try {
       final response = await _dio.put(
         path,
-        data: body == null ? null : FormData.fromMap(body),
+        data: body,
         queryParameters: queryParameters,
         options: Options(headers: headers),
       );
       return response.data;
     } on DioError catch (error) {
+      if (error.response?.data == null) return Future.error(ErrorModel(['Unexpected error.']));
       final httpError = ErrorModel.fromJson(error.response!.data);
       return Future.error(httpError.errors);
     } catch (e) {
@@ -93,12 +96,13 @@ class HttpService implements IHttpService {
     try {
       final response = await _dio.patch(
         path,
-        data: body == null ? null : FormData.fromMap(body),
+        data: body,
         queryParameters: queryParameters,
         options: Options(headers: headers),
       );
       return response.data;
     } on DioError catch (error) {
+      if (error.response?.data == null) return Future.error(ErrorModel(['Unexpected error.']));
       final httpError = ErrorModel.fromJson(error.response!.data);
       return Future.error(httpError.errors);
     } catch (e) {
@@ -119,6 +123,7 @@ class HttpService implements IHttpService {
       );
       return response.data;
     } on DioError catch (error) {
+      if (error.response?.data == null) return Future.error(ErrorModel(['Unexpected error.']));
       final httpError = ErrorModel.fromJson(error.response!.data);
       return Future.error(httpError.errors);
     } catch (e) {

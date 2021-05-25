@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 import 'package:oneonones/common/enumerations/frequency.enum.dart';
 import 'package:oneonones/common/interfaces/repositories/dashboard.repository.i.dart';
@@ -9,6 +10,7 @@ import 'package:oneonones/common/models/dashboard/dashboard.model.dart';
 import 'package:oneonones/common/models/employee/employee.model.dart';
 import 'package:oneonones/common/models/oneonone/oneonone_input.model.dart';
 import 'package:oneonones/common/models/user.model.dart';
+import 'package:oneonones/common/utils/datetime.util.dart';
 
 part 'oneonone.controller.g.dart';
 
@@ -85,5 +87,17 @@ abstract class _OneononeController with Store {
   Future oneononeInsert(String leaderId, String ledId, FrequencyEnum frequency) async {
     final oneononeInput = OneononeInputModel(leaderId, ledId, frequency);
     await _oneononeRepository.insert(oneononeInput);
+  }
+
+  @observable
+  TextEditingController historicalInsertDatetimeText = TextEditingController();
+
+  @observable
+  DateTime? historicalInsertDatetime;
+
+  @action
+  void historicalInsertSetDatetime(DateTime? datetime) {
+    historicalInsertDatetime = datetime;
+    historicalInsertDatetimeText.text = DatetimeUtil.toDateText(datetime);
   }
 }

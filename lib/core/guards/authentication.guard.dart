@@ -14,4 +14,8 @@ class AuthenticationGuard implements RouteGuard {
       return Future.value(isValid);
     }
   }
+
+  @override
+  // TODO: implement guardedRoute
+  String? get guardedRoute => throw UnimplementedError();
 }
